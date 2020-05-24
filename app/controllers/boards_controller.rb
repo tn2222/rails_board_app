@@ -1,4 +1,5 @@
 class BoardsController < ApplicationController
+  before_action :isLogin, only: %i[new create edit destroy]
   before_action :set_target_board, only: %i[show edit update destroy]
 
   def index
@@ -12,6 +13,7 @@ class BoardsController < ApplicationController
   
   def create
     board = Board.new(board_params)
+    board.name = current_user.name
     if board.save
         flash[:notice] = "「#{board.title}」の掲示板を作成しました"
         redirect_to board
@@ -57,5 +59,6 @@ class BoardsController < ApplicationController
   def set_target_board
     @board = Board.find(params[:id])
   end
+
 end
 

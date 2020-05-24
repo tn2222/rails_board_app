@@ -1,6 +1,9 @@
 class CommentsController < ApplicationController
+    before_action :isLogin, only: %i[create destroy]
+
     def create
       comment = Comment.new(comment_params)
+      comment.name = current_user.name
       if comment.save
         flash[:notice] = 'コメントを投稿しました'
         redirect_to comment.board

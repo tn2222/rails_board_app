@@ -7,5 +7,14 @@ module ApplicationHelper
         link_to name, path, class: 'nav-link'
       end
     end
+
+    def can_edit(obj)
+        if @current_user && obj.name == @current_user.name
+            return true
+        else
+            return false
+        end
+    end
+
   end
   
